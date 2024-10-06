@@ -1,29 +1,15 @@
 package com.todo.controller;
 //-javaagent:C:\jetbraincrack\enc-sniarbtej-2024.2.4.jar
-import com.todo.dto.PageRequestDto;
 import com.todo.dto.TodoDto;
-import com.todo.entity.Todo;
-import com.todo.entity.StatusTodo;
-import com.todo.exception.ForbiddenDate;
 import com.todo.service.TodoService;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
-import java.time.LocalDateTime;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar ;
-
-import java.time.DayOfWeek;
-import java.time.format.TextStyle;
-import java.util.Locale;
 
 @RestController
 //@RequestMapping("/api/todos")
@@ -34,23 +20,8 @@ public class TodoController {
 
     @PostMapping("/api/todos")
     public ResponseEntity<TodoDto> addTodo(@RequestBody TodoDto todoDto){
-
         TodoDto savedTodo = todoService.addTodo(todoDto);
         return new ResponseEntity<>(savedTodo, HttpStatus.CREATED);
-
-//        {
-//            "title" : "aziz2",
-//             "description": "pass33",
-//             "completed":  true
-//        }
-//        {
-//                "title" : "aziz2",
-//                "description": "pass33",
-//                "createdOn":  "2024-04-13T08:30:00Z",
-//                "estimatedOn":  "2024-04-13T08:30:00Z",
-//                "status": "в работе"
-//        }
-
     }
 
     @GetMapping("/api/todos/{id}")
@@ -62,7 +33,9 @@ public class TodoController {
     @GetMapping("/api/todos")
     public ResponseEntity<List<TodoDto>> getAllTodos(){
         List<TodoDto> todos = todoService.getAllTodos();
-        return ResponseEntity.ok(todos);
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(todos);
     }
 
     @GetMapping(value = {"/api/todos/pagind/{pageNumber}/{pageSize}/{status}", "/api/todos/pagind/{pageNumber}/{pageSize}"})
@@ -71,7 +44,7 @@ public class TodoController {
                                                                       @PathVariable(required = false) String status){
 
         pageNumber = pageNumber != null ? pageNumber : Integer.valueOf(0);
-        pageSize = pageSize != null ? pageSize : Integer.valueOf(1);
+        pageSize = pageSize != null ? pageSize : Integer.valueOf(5);
 
         Page<TodoDto> todos;
 
