@@ -1,5 +1,4 @@
 package com.todo.controller;
-//-javaagent:C:\jetbraincrack\enc-sniarbtej-2024.2.4.jar
 import com.todo.dto.TodoDto;
 import com.todo.service.TodoService;
 import lombok.AllArgsConstructor;
@@ -53,14 +52,12 @@ public class TodoController {
         } else {
             todos = todoService.getTodosPagination(pageNumber, pageSize);
         }
-
         return ResponseEntity.ok(todos);
     }
 
     @PutMapping("/api/todos/{id}")
     public ResponseEntity<TodoDto> updateTodo(@RequestBody TodoDto todoDto, @PathVariable Long id){
         TodoDto updateTodo = todoService.updateTodo(todoDto, id);
-        //return new ResponseEntity<>(todoDto, HttpStatus.OK);
         return ResponseEntity.ok(updateTodo);
     }
 
