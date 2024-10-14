@@ -1,14 +1,8 @@
 package com.todo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class PublicHoliday {
-
         public String date;
-        public String localName;
-        public String name;
-        public String countryCode ;
-        public Boolean fixed;
-        public Boolean global;
-        public String[] counties;
-        public String[] types;
-
 }

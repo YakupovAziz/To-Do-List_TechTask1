@@ -1,6 +1,5 @@
 package com.todo.controller;
 
-import com.todo.dto.TodoDto;
 import com.todo.entity.StatusTodo;
 import com.todo.entity.Todo;
 import com.todo.service.TodoService;
@@ -15,8 +14,6 @@ import org.springframework.http.MediaType;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
 
 
 import static org.junit.jupiter.api.Assertions.*;

@@ -11,25 +11,25 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-//@RequestMapping("/api/todos")
+@RequestMapping("/api/todos")
 @AllArgsConstructor
 public class TodoController {
 
     private TodoService todoService;
 
-    @PostMapping("/api/todos")
+    @PostMapping
     public ResponseEntity<TodoDto> addTodo(@RequestBody TodoDto todoDto){
         TodoDto savedTodo = todoService.addTodo(todoDto);
         return new ResponseEntity<>(savedTodo, HttpStatus.CREATED);
     }
 
-    @GetMapping("/api/todos/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<TodoDto> getTodo(@PathVariable("id") Long todoId){
         TodoDto todoDto = todoService.getTodo(todoId);
         return new ResponseEntity<>(todoDto, HttpStatus.OK);
     }
 
-    @GetMapping("/api/todos")
+    @GetMapping
     public ResponseEntity<List<TodoDto>> getAllTodos(){
         List<TodoDto> todos = todoService.getAllTodos();
         return ResponseEntity.ok()
@@ -37,7 +37,7 @@ public class TodoController {
                 .body(todos);
     }
 
-    @GetMapping(value = {"/api/todos/pagind/{pageNumber}/{pageSize}/{status}", "/api/todos/pagind/{pageNumber}/{pageSize}"})
+    @GetMapping(value = {"/pagind/{pageNumber}/{pageSize}/{status}", "/pagind/{pageNumber}/{pageSize}"})
     public ResponseEntity<Page<TodoDto>> getTodosPaginationWithFilter(@PathVariable Integer pageNumber,
                                                                       @PathVariable Integer pageSize,
                                                                       @PathVariable(required = false) String status){
@@ -55,25 +55,25 @@ public class TodoController {
         return ResponseEntity.ok(todos);
     }
 
-    @PutMapping("/api/todos/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<TodoDto> updateTodo(@RequestBody TodoDto todoDto, @PathVariable Long id){
         TodoDto updateTodo = todoService.updateTodo(todoDto, id);
         return ResponseEntity.ok(updateTodo);
     }
 
-    @DeleteMapping("/api/todos/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteTodo(@PathVariable("id") Long todoId){
         todoService.deleteTodo(todoId);
         return new ResponseEntity<>("Deleted Successfully", HttpStatus.OK);
     }
 
-    @PatchMapping("/api/todos/complete/{id}")
+    @PatchMapping("/complete/{id}")
     public ResponseEntity<TodoDto> completeTodo(@PathVariable Long id){
         TodoDto updatedTodo = todoService.completeTodo(id);
         return ResponseEntity.ok(updatedTodo);
     }
 
-    @PatchMapping("/api/todos/incomplete/{id}")
+    @PatchMapping("/incomplete/{id}")
     public ResponseEntity<TodoDto> inCompleteTodo(@PathVariable Long id){
         TodoDto updatedTodo = todoService.inCompleteTodo(id);
         return ResponseEntity.ok(updatedTodo);
