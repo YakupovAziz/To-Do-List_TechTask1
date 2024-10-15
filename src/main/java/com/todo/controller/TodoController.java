@@ -44,7 +44,6 @@ public class TodoController {
 
         pageNumber = pageNumber != null ? pageNumber : Integer.valueOf(0);
         pageSize = pageSize != null ? pageSize : Integer.valueOf(5);
-
         Page<TodoDto> todos;
 
         if (status != null && !status.isEmpty() && (status.equals("completed") || status.equals("not_completed"))) {
